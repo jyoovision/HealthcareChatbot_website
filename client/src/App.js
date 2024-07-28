@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'; // React와 Hook을 불러옵니다.
-import { Canvas, useLoader, useThree } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { Canvas, useLoader } from '@react-three/fiber';
+// import { OrbitControls } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { TextureLoader, ClampToEdgeWrapping, LinearFilter } from 'three';
 import axios from 'axios'; // HTTP 요청을 보내기 위한 axios를 불러옵니다.
@@ -24,15 +24,15 @@ function Model({ url, position, texture, rotation }) {
     return <primitive object={gltf.scene} position={position} rotation={rotation} />;
 }
 
-// 카메라 컨트롤 컴포넌트
-function CameraControls({ fov }) {
-    const { camera } = useThree();
-    useEffect(() => {
-        camera.fov = fov;
-        camera.updateProjectionMatrix();
-    }, [fov, camera]);
-    return null;
-}
+// // 카메라 컨트롤 컴포넌트
+// function CameraControls({ fov }) {
+//     const { camera } = useThree();
+//     useEffect(() => {
+//         camera.fov = fov;
+//         camera.updateProjectionMatrix();
+//     }, [fov, camera]);
+//     return null;
+// }
 
 // 메인 애플리케이션 컴포넌트
 function App() {
@@ -44,8 +44,8 @@ function App() {
     const [audioUrl, setAudioUrl] = useState(''); // 오디오 파일의 URL을 저장합니다.
     const [eyeTextureIndex, setEyeTextureIndex] = useState(0); // 현재 눈 텍스처의 인덱스
     const [mouthTextureIndex, setMouthTextureIndex] = useState(0); // 현재 입 텍스처의 인덱스
-    const [fov, setFov] = useState(75); // 카메라의 시야각 (FOV)
     const [isPlaying, setIsPlaying] = useState(false); // 오디오 재생 상태를 저장합니다.
+    // const [fov, setFov] = useState(75); // 카메라의 시야각 (FOV)
 
     // 눈 텍스처를 로드합니다.
     const eyeTextures = [
@@ -140,18 +140,10 @@ function App() {
         };
     }, [isPlaying, eyeTextures.length, mouthTextures.length]);
 
-    // FOV 슬라이더의 값을 변경할 때 호출되는 함수
-    const handleSliderChange = (event) => {
-        setFov(Number(event.target.value));
-    };
-
-    // // 오디오 URL이 변경될 때마다 오디오를 재생합니다.
-    // useEffect(() => {
-    //     if (audioUrl) {
-    //         const audio = new Audio(audioUrl); // 새로운 오디오 객체를 생성합니다.
-    //         audio.play(); // 오디오를 재생합니다.
-    //     }
-    // }, [audioUrl]); // audioUrl이 변경될 때만 실행됩니다.
+    // // FOV 슬라이더의 값을 변경할 때 호출되는 함수
+    // const handleSliderChange = (event) => {
+    //     setFov(Number(event.target.value));
+    // };
 
     // 오디오 URL이 변경될 때마다 오디오를 재생합니다.
     useEffect(() => {
